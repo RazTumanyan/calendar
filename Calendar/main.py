@@ -22,7 +22,17 @@ def main():
 
         if choice == 1:
             start_date = input("Enter the start date (YYYY-MM-DD): ")
+            start_year, start_month, start_day = map(int, start_date.split('-'))
+            if start_year != year or start_month < 1 or start_month > 12 or start_day < 1 or start_day > \
+                    calendar.month_days[start_month - 1]:
+                print("Invalid Date")
+                continue
             end_date = input("Enter the end date (YYYY-MM-DD): ")
+            end_year, end_month, end_day = map(int, end_date.split('-'))
+            if end_year != year or end_month < 1 or end_month > 12 or end_day < 1 or end_day > \
+                    calendar.month_days[end_month - 1]:
+                print("Invalid Date")
+                continue
             description = input("Enter the task description: ")
             try:
                 calendar.add_task(start_date, end_date, description)

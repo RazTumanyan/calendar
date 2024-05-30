@@ -42,14 +42,18 @@ class Calendar:
                     current_year += 1
 
     def display_month(self, month):
-        print(f"Tasks for {self.month_names[month - 1]} {self.year}")
-        for day in range(1, self.month_days[month - 1] + 1):
-            date_key = self.date_str(self.year, month, day)
-            if date_key in self.tasks:
-                print(f"{day}: {', '.join(self.tasks[date_key])}")
+        if month > 12 or month < 1:
+            print("Invalid Date")
+        else:
+            print(f"Tasks for {self.month_names[month - 1]} {self.year}")
+            for day in range(1, self.month_days[month - 1] + 1):
+                date_key = self.date_str(self.year, month, day)
+                if date_key in self.tasks:
+                    print(f"{day}: {', '.join(self.tasks[date_key])}")
 
     def display_week(self, start_date):
         start_year, start_month, start_day = map(int, start_date.split('-'))
+        self.validate_date(start_year, start_month, start_day)
         print(f"Tasks for the week starting {start_date}")
         for _ in range(7):
             date_key = self.date_str(start_year, start_month, start_day)
