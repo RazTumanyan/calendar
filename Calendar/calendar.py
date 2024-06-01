@@ -1,3 +1,7 @@
+def date_str(year, month, day):
+    return f"{year:04d}-{month:02d}-{day:02d}"
+
+
 class Calendar:
     def __init__(self, year):
         self.year = year
@@ -18,9 +22,6 @@ class Calendar:
         if year != self.year or month < 1 or month > 12 or day < 1 or day > self.month_days[month - 1]:
             raise ValueError("Invalid date")
 
-    def date_str(self, year, month, day):
-        return f"{year:04d}-{month:02d}-{day:02d}"
-
     def add_task(self, start_date, end_date, description):
         start_year, start_month, start_day = map(int, start_date.split('-'))
         end_year, end_month, end_day = map(int, end_date.split('-'))
@@ -29,7 +30,7 @@ class Calendar:
         current_year, current_month, current_day = start_year, start_month, start_day
         while (current_year, current_month, current_day) <= (end_year, end_month, end_day):
             self.validate_date(current_year, current_month, current_day)
-            date_key = self.date_str(current_year, current_month, current_day)
+            date_key = date_str(current_year, current_month, current_day)
             if date_key not in self.tasks:
                 self.tasks[date_key] = []
             self.tasks[date_key].append(description)
@@ -47,7 +48,7 @@ class Calendar:
         else:
             print(f"Tasks for {self.month_names[month - 1]} {self.year}")
             for day in range(1, self.month_days[month - 1] + 1):
-                date_key = self.date_str(self.year, month, day)
+                date_key = date_str(self.year, month, day)
                 if date_key in self.tasks:
                     print(f"{day}: {', '.join(self.tasks[date_key])}")
 
@@ -56,7 +57,7 @@ class Calendar:
         self.validate_date(start_year, start_month, start_day)
         print(f"Tasks for the week starting {start_date}")
         for _ in range(7):
-            date_key = self.date_str(start_year, start_month, start_day)
+            date_key = date_str(start_year, start_month, start_day)
             if date_key in self.tasks:
                 print(f"{date_key}: {', '.join(self.tasks[date_key])}")
             start_day += 1
@@ -70,7 +71,7 @@ class Calendar:
     def display_day(self, date):
         year, month, day = map(int, date.split('-'))
         self.validate_date(year, month, day)
-        date_key = self.date_str(year, month, day)
+        date_key = date_str(year, month, day)
         if date_key in self.tasks:
             print(f"Tasks for {date_key}: {', '.join(self.tasks[date_key])}")
         else:
