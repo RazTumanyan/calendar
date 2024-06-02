@@ -4,6 +4,10 @@ def date_str(year, month, day):
 
 class Calendar:
     def __init__(self, year):
+        if type(year) == type(""):
+            raise ValueError("The Argument Should Be an Integer")
+        elif year < 1:
+            raise ValueError("The Year Can't Be Less Than 1")
         self.year = year
         self.tasks = {}
         self.month_days = [31, 29 if self.is_leap_year() else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -44,7 +48,9 @@ class Calendar:
 
     def display_month(self, month):
         if month > 12 or month < 1:
-            print("Invalid Date")
+            raise ValueError("Invalid Date")
+        elif type(month) == type(""):
+            raise ValueError("Invalid Datatype")
         else:
             print(f"Tasks for {self.month_names[month - 1]} {self.year}")
             for day in range(1, self.month_days[month - 1] + 1):
